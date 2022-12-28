@@ -1,9 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAGgDjnazoRCnrqw3AtMipDa-6MwGNzIJU",
   authDomain: "vue-twitter-d87a1.firebaseapp.com",
@@ -13,4 +11,5 @@ const firebaseConfig = {
   appId: "1:106415468661:web:3a9e92b85d0c31dfe9c83c",
 };
 
-const app = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp)

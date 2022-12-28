@@ -1,4 +1,12 @@
-<script setup></script>
+<script setup>
+import { useCurrentUser } from 'vuefire'
+import { useFirebaseApp } from 'vuefire';
+
+const user = useCurrentUser()
+const auth = useFirebaseApp()
+
+console.log(auth)
+</script>
 
 <template>
   <div class="relative py-16">
