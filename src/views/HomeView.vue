@@ -1,5 +1,11 @@
-<script setup></script>
+<script setup>
+import SideBar from '@/components/Sidebar.vue'
+import HomeTweets from '@/components/HomeTweets.vue'
+</script>
 
 <template>
-  <h1 class="text-3xl font-bold underline text-green-400">Hello world!</h1>
+  <main class="grid grid-cols-6 sm:grid-cols-8">
+    <SideBar />
+    <!-- <HomeTweets /> -->
+  </main>
 </template>

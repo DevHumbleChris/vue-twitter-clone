@@ -32,8 +32,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) next({ name: "login" });
-  next();
+  const isAuthenticated = JSON.parse(localStorage.getItem("authenticated"));
+  console.log(isAuthenticated)
+  if (to.meta.requiresAuth && !isAuthenticated) next({ name: "login" });
+  else next();
 });
 
 export default router;
