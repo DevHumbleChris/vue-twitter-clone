@@ -8,6 +8,9 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/about",
@@ -16,6 +19,9 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/login",
@@ -23,6 +29,11 @@ const router = createRouter({
       component: () => import("../views/LoginView.vue"),
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) next({ name: "login" });
+  next();
 });
 
 export default router;
