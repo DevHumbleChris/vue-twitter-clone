@@ -6,6 +6,6 @@ import HomeTweets from '@/components/HomeTweets.vue'
 <template>
   <main class="grid grid-cols-6 sm:grid-cols-8">
     <SideBar />
-    <!-- <HomeTweets /> -->
+    <HomeTweets />
   </main>
 </template>

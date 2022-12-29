@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthentification } from "@/stores/auth";
-import { GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "@firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
 import { useRouter } from "vue-router";
 import { auth } from '../firebaseConfig'
 
