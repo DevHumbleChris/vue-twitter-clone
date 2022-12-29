@@ -4,7 +4,7 @@ import HomeTweets from '@/components/HomeTweets.vue'
 </script>
 
 <template>
-  <main class="grid grid-cols-6 sm:grid-cols-8">
+  <main class="grid grid-cols-6 sm:grid-cols-8 gap-2 space-x-2">
     <SideBar />
     <HomeTweets />
   </main>
