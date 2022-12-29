@@ -20,35 +20,35 @@ import {
         <nav class="space-y-3">
             <div class="flex justify-evenly items-center space-x-2">
                 <HomeIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Home</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Home</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <HashtagIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Explore</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Explore</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <BellIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Notifications</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Notifications</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <EnvelopeIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Messages</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Messages</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <BookmarkIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Bookmarks</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Bookmarks</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <UserIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Profile</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Profile</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <EllipsisHorizontalCircleIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block text-[#1ca0f2]">More</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">More</h1>
             </div>
             <div class="flex justify-evenly items-center space-x-2">
                 <ArrowRightOnRectangleIcon class="w-12 h-12 text-[#1ca0f2]" />
-                <h1 class="text-xl hidden sm:block">Logout</h1>
+                <h1 class="text-xl hidden sm:block hover:text-[#1ca0f2]">Logout</h1>
             </div>
         </nav>
     </aside>

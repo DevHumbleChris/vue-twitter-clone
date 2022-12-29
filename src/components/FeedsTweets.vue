@@ -28,12 +28,26 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
                 <div class="flex justify-between">
                     <div class="text-sm">
                         <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
+                            <p>Technology</p>
                             <div class="w-1 h-1 rounded-full bg-gray-400"></div>
                             <p>Trending</p>
                         </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
+                        <p>GitHub</p>
+                        <p class="text-gray-500">30.2k Tweets</p>
+                    </div>
+                    <EllipsisHorizontalIcon class="w-6 h-6" />
+                </div>
+            </div>
+            <div class="my-2">
+                <div class="flex justify-between">
+                    <div class="text-sm">
+                        <div class="flex space-x-2 items-center text-gray-500">
+                            <p>Politics</p>
+                            <div class="w-1 h-1 rounded-full bg-gray-400"></div>
+                            <p>Trending</p>
+                        </div>
+                        <p>Andrew Tate</p>
+                        <p class="text-gray-500">166k Tweets</p>
                     </div>
                     <EllipsisHorizontalIcon class="w-6 h-6" />
                 </div>
@@ -46,7 +60,21 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
                             <div class="w-1 h-1 rounded-full bg-gray-400"></div>
                             <p>Trending</p>
                         </div>
-                        <p>Erling Haaland</p>
+                        <p>Messi</p>
+                        <p class="text-gray-500">234k Tweets</p>
+                    </div>
+                    <EllipsisHorizontalIcon class="w-6 h-6" />
+                </div>
+            </div>
+            <div class="my-2">
+                <div class="flex justify-between">
+                    <div class="text-sm">
+                        <div class="flex space-x-2 items-center text-gray-500">
+                            <p>Politics</p>
+                            <div class="w-1 h-1 rounded-full bg-gray-400"></div>
+                            <p>Trending</p>
+                        </div>
+                        <p>Congolese</p>
                         <p class="text-gray-500">52k Tweets</p>
                     </div>
                     <EllipsisHorizontalIcon class="w-6 h-6" />
@@ -56,12 +84,12 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
                 <div class="flex justify-between">
                     <div class="text-sm">
                         <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
+                            <p>Technology</p>
                             <div class="w-1 h-1 rounded-full bg-gray-400"></div>
                             <p>Trending</p>
                         </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
+                        <p>Vue</p>
+                        <p class="text-gray-500">522k Tweets</p>
                     </div>
                     <EllipsisHorizontalIcon class="w-6 h-6" />
                 </div>
@@ -70,12 +98,12 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
                 <div class="flex justify-between">
                     <div class="text-sm">
                         <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
+                            <p>Widlife</p>
                             <div class="w-1 h-1 rounded-full bg-gray-400"></div>
                             <p>Trending</p>
                         </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
+                        <p>Mermaid</p>
+                        <p class="text-gray-500">2k Tweets</p>
                     </div>
                     <EllipsisHorizontalIcon class="w-6 h-6" />
                 </div>
@@ -84,40 +112,12 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
                 <div class="flex justify-between">
                     <div class="text-sm">
                         <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
+                            <p>Tourism</p>
                             <div class="w-1 h-1 rounded-full bg-gray-400"></div>
                             <p>Trending</p>
                         </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
-                    </div>
-                    <EllipsisHorizontalIcon class="w-6 h-6" />
-                </div>
-            </div>
-            <div class="my-2">
-                <div class="flex justify-between">
-                    <div class="text-sm">
-                        <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
-                            <div class="w-1 h-1 rounded-full bg-gray-400"></div>
-                            <p>Trending</p>
-                        </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
-                    </div>
-                    <EllipsisHorizontalIcon class="w-6 h-6" />
-                </div>
-            </div>
-            <div class="my-2">
-                <div class="flex justify-between">
-                    <div class="text-sm">
-                        <div class="flex space-x-2 items-center text-gray-500">
-                            <p>Sports</p>
-                            <div class="w-1 h-1 rounded-full bg-gray-400"></div>
-                            <p>Trending</p>
-                        </div>
-                        <p>Erling Haaland</p>
-                        <p class="text-gray-500">52k Tweets</p>
+                        <p>Kenya</p>
+                        <p class="text-gray-500">1,673 Tweets</p>
                     </div>
                     <EllipsisHorizontalIcon class="w-6 h-6" />
                 </div>
