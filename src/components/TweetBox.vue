@@ -1,20 +1,38 @@
 <script setup>
 import { GifIcon, ListBulletIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import { auth } from "@/firebaseConfig";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
+import { db } from "../firebaseConfig";
+
+const tweet = ref('')
 
 const user = computed(() => {
     return auth.currentUser;
 });
-console.log(user.value);
+
+const handleSubmit = async () => {
+    await addDoc(collection(db, "tweets"), {
+        tweet: tweet.value,
+        likes: [],
+        comments: [],
+        retweets: [],
+        user: {
+            uid: user.value.uid,
+            name: user.value.displayName,
+            photoURL: user.value.photoURL
+        },
+        timestamp: serverTimestamp()
+    })
+    tweet.value = ''
+}
 </script>
 
 <template>
     <div class="flex space-x-2">
-        <img src="https://the-coding-montana.vercel.app/_next/image?url=%2Fimages%2Fthe-coding-montana.png&w=1920&q=75"
-            alt="user-logo" class="w-16 h-16 border border-gray-200 rounded-full" />
-        <div>
-            <textarea id="about" name="about" rows="3"
+        <img :src="user.photoURL" alt="user-logo" class="w-16 h-16 border border-gray-200 rounded-full" />
+        <form @submit.prevent="handleSubmit">
+            <textarea id="about" name="tweet" rows="3" v-model="tweet"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 placeholder="What's Happening?"></textarea>
             <div class="my-3 sm:flex justify-between">
@@ -36,9 +54,10 @@ console.log(user.value);
                     <MapPinIcon class="text-[#1ca0f2] w-8" />
                 </div>
                 <div>
-                    <button class="bg-[#1ca0f2] text-white p-3 w-full my-2 rounded-2xl">Tweet</button>
+                    <button type="submit" :disabled="!tweet"
+                        class="bg-[#1ca0f2] text-white p-3 w-full my-2 rounded-2xl">Tweet</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </template>
