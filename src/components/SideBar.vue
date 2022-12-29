@@ -7,7 +7,7 @@ import {
     BookmarkIcon,
     UserIcon,
     EllipsisHorizontalCircleIcon,
-ArrowRightOnRectangleIcon,
+    ArrowRightOnRectangleIcon,
 } from "@heroicons/vue/20/solid";
 </script>
 
