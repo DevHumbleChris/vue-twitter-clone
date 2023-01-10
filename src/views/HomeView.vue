@@ -5,7 +5,7 @@ import FeedsTweets from '../components/FeedsTweets.vue';
 </script>
 
 <template>
-  <main class="grid grid-cols-6 sm:grid-cols-8 gap-2 space-x-2">
+  <main class="flex">
     <SideBar />
     <HomeTweets />
     <FeedsTweets />

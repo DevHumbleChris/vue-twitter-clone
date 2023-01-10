@@ -17,6 +17,7 @@
     "date-fns": "^2.29.3",
     "firebase": "^9.15.0",
     "pinia": "^2.0.28",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuefire": "^3.0.0"

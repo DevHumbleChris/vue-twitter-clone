@@ -3,7 +3,7 @@ import { MagnifyingGlassIcon, EllipsisHorizontalIcon } from "@heroicons/vue/20/s
 </script>
 
 <template>
-    <section class="hidden sm:block sm:col-span-2 p-2 border border-gray-200">
+    <section class="sticky top-0 h-screen hidden sm:w-[600px] sm:block sm:col-span-2 p-2 border border-gray-200">
         <div class="flex space-x-2 items-center bg-[#eff3f4] rounded-2xl p-3 my-2">
             <MagnifyingGlassIcon class="w-9 h-9 text-gray-600" />
             <input type="text" class="w-full rounded-md border-0 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-[#eff3f4]" placeholder="Search Twitter" />
