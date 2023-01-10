@@ -1,5 +1,5 @@
 <script setup>
-import { collection, onSnapshot, orderBy, query } from "@firebase/firestore"
+import { collection, onSnapshot, orderBy } from "@firebase/firestore"
 import { onMounted, ref } from 'vue'
 import { db } from "../firebaseConfig";
 import SingleTweet from './SingleTweet.vue'
