@@ -1,22 +1,21 @@
 <script setup>
-import { GifIcon, ListBulletIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import { auth } from "@/firebaseConfig";
 import { computed, ref } from "vue";
-import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
-import { db } from "../firebaseConfig";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "@firebase/firestore";
+import { db, storage } from "../firebaseConfig";
+import { getDownloadURL, uploadString } from "@firebase/storage";
+import { XMarkIcon, PhotoIcon } from "@heroicons/vue/24/outline";
 
 const tweet = ref('')
+const selectedFile = ref(null)
 
 const user = computed(() => {
     return auth.currentUser;
 });
 
 const handleSubmit = async () => {
-    await addDoc(collection(db, "tweets"), {
+    const docRef = await addDoc(collection(db, "tweets"), {
         tweet: tweet.value,
-        likes: [],
-        comments: [],
-        retweets: [],
         user: {
             uid: user.value.uid,
             name: user.value.displayName,
@@ -24,12 +23,32 @@ const handleSubmit = async () => {
         },
         timestamp: serverTimestamp()
     })
+    const imageRef = ref(storage, `tweets/${docRef.id}/images`);
+    if (selectedFile.value) {
+      await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "tweets", docRef.id), {
+          image: downloadURL,
+        });
+      });
+    }
     tweet.value = ''
+    selectedFile.value = ''
 }
+
+const addImageToPost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (readerEvent) => {
+      selectedFile.value = readerEvent.target.result;
+    };
+  };
 </script>
 
 <template>
-    <div class="flex space-x-2">
+    <!-- <div class="flex space-x-2">
         <img :src="user.photoURL" alt="user-logo" class="w-16 h-16 border border-gray-200 rounded-full" />
         <form @submit.prevent="handleSubmit">
             <textarea id="about" name="tweet" rows="3" v-model="tweet"
@@ -59,5 +78,53 @@ const handleSubmit = async () => {
                 </div>
             </div>
         </form>
-    </div>
+    </div> -->
+    <div class="flex mt-4 space-x-3 w-full">
+        <img :src="user.photoURL" alt="" class="h-11 w-11 rounded-full" />
+        <form @submit.prevent={handleSubmit} className="flex-grow">
+          <textarea
+            rows="2"
+            v-model="tweet"
+            placeholder="What's Happening?"
+            class="outline-none tracking-wide min-h-[80px] bg-transparent w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          ></textarea>
+          <div v-if="selectedFile" class="relative my-2">
+            <div
+              class="w-8 h-8 left-1 cursor-pointer"
+              @click="selectedFile = null"
+            >
+              <XMarkIcon class="text-black h-5" />
+            </div>
+            <img
+              src={selectedFile}
+              alt=""
+              class="rounded-2xl max-h-80 object-contain mb-2"
+            />
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <div
+                class="flex items-center cursor-pointer"
+              >
+              <!-- onClick={() => filePickerRef.current.click()} -->
+                <PhotoIcon class="w-8 text-[#1ca0f2]" />
+                <input
+                  type="file"
+                  hidden
+                  @change="addImageToPost"
+                />
+                <!-- onChange={addImageToPost}
+                  ref={filePickerRef} -->
+              </div>
+            </div>
+            <button
+              class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl"
+              disabled={!tweet}
+              type="submit"
+            >
+              Tweet
+            </button>
+          </div>
+        </form>
+      </div>
 </template>
