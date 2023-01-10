@@ -75,7 +75,7 @@ const addImageToPost = (e) => {
                   ref={filePickerRef} -->
           </div>
         </div>
-        <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" disabled={!tweet} type="submit">
+        <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">
           Tweet
         </button>
       </div>
