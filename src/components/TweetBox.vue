@@ -36,9 +36,6 @@ const handleSubmit = async () => {
   selectedFile.value = ''
 }
 
-const pickFile = () => {
-  // console.log(filePickerRef)
-}
 
 const addImageToPost = (e) => {
   const reader = new FileReader();

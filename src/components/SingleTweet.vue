@@ -81,6 +81,12 @@ watchEffect(() => {
     }
 })
 
+const tagName = ref('')
+watchEffect(() => {
+    const newTagName = tweet.value.user.name.split(" ").join("-").toLowerCase()
+    tagName.value = newTagName
+})
+
 const likePost = async () => {
     if (liked.value) {
         await deleteDoc(doc(db, "tweets", tweet.value.id, "likes", user.value.uid));
@@ -122,7 +128,7 @@ const retweetPost = async () => {
                             <div>3 mins ago</div>
                         </div>
                         <h5 class="text-[15px] sm:text-base">
-                            @<span class="text-[#1ca0f2]">tagName</span>
+                            @<span class="text-[#1ca0f2]">{{tagName}}</span>
                         </h5>
                     </div>
                     <p class="text-gray-600 my-2">{{ tweet?.tweet }}</p>
