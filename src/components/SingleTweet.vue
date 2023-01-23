@@ -1,16 +1,16 @@
 <script setup>
 import { computed, watchEffect, ref } from 'vue'
 import {
-  ChatBubbleOvalLeftIcon,
-  HeartIcon,
-  ArrowsUpDownIcon,
+    ChatBubbleOvalLeftIcon,
+    HeartIcon,
+    ArrowsUpDownIcon,
 } from "@heroicons/vue/24/outline";
 import {
-  HeartIcon as HeartIconFilled,
-  ArrowsUpDownIcon as ArrowsUpDownIconFilled,
-  TrashIcon,
+    HeartIcon as HeartIconFilled,
+    ArrowsUpDownIcon as ArrowsUpDownIconFilled,
+    TrashIcon,
 } from "@heroicons/vue/20/solid";
-import { collection, onSnapshot } from '@firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, setDoc } from '@firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 
 const props = defineProps({
@@ -81,6 +81,17 @@ watchEffect(() => {
     }
 })
 
+const likePost = async () => {
+    if (liked.value) {
+        await deleteDoc(doc(db, "tweets", tweet.value.id, "likes", user.value.uid));
+    } else {
+        await setDoc(doc(db, "tweets", tweet.value.id, "likes", user.value.uid), {
+            id: tweet.value.user.uid,
+            name: tweet.value.user.name,
+        });
+    }
+};
+
 </script>
 
 <template>
@@ -119,7 +130,7 @@ watchEffect(() => {
                     {{ comments?.length }}
                 </p>
             </div>
-            <div class="flex items-center space-x-1 cursor-pointer">
+            <div class="flex items-center space-x-1 cursor-pointer" @click="likePost">
                 <HeartIconFilled v-if="liked" class="text-[#f60100] w-6" />
                 <HeartIcon v-else class="w-6 h-6 text-[#1ca0f2]" />
                 <p v-if="likes.length > 0">{{ likes.length }}</p>

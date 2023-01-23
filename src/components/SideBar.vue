@@ -37,7 +37,7 @@ const appSignOut = () => {
     <nav class="space-y-4 text-lg">
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
         <HomeIcon class="w-10 h-10 text-[#1ca0f2]" />
-        <h1 class="hidden sm:block hover:text-[#1ca0f2]">Homed</h1>
+        <h1 class="hidden sm:block hover:text-[#1ca0f2]">Home</h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
         <HashtagIcon class="w-10 h-10 text-[#1ca0f2]" />
