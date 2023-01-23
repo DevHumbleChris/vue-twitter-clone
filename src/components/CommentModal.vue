@@ -133,9 +133,11 @@ const addImageToPost = (e) => {
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
-                                            <div class="flex items-center cursor-pointer">
+                                            <div class="flex items-center" @click="pickFile">
+                                              <label for="imageFile" class="cursor-pointer">
                                                 <PhotoIcon class="w-8 text-[#1ca0f2]" />
-                                                <input type="file" hidden @change="addImageToPost" />
+                                              </label>
+                                              <input type="file" id="imageFile" hidden @change="addImageToPost" />
                                             </div>
                                         </div>
                                         <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">
