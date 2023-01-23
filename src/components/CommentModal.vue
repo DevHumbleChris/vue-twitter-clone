@@ -12,6 +12,7 @@ import { auth, db, storage } from '../firebaseConfig'
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/firestore'
 import { getDownloadURL, uploadString } from '@firebase/storage'
 import { PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { format } from 'timeago.js'
 
 const tweetReply = ref('')
 const selectedFile = ref(null)
@@ -72,6 +73,12 @@ const commentAddImageToPost = (e) => {
         selectedFile.value = readerEvent.target.result;
     };
 };
+
+const timeAgo = ref('')
+watchEffect(() => {
+    const tweetTime = format(tweet?.value.timestamp?.toDate())
+    timeAgo.value = tweetTime
+})
 </script>
 
 <template>
@@ -106,7 +113,7 @@ const commentAddImageToPost = (e) => {
                                             </h4>
                                             <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
                                             <span class="text-[10px] sm:text-base">
-                                                3 mins
+                                                {{ timeAgo }}
                                             </span>
                                         </div>
                                         <div>
