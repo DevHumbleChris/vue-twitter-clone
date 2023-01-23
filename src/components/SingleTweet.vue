@@ -92,6 +92,17 @@ const likePost = async () => {
     }
 };
 
+const retweetPost = async () => {
+    if (isRetweeted.value) {
+      await deleteDoc(doc(db, "tweets", tweet.value.id, "retweets", user.value.uid));
+    } else {
+      await setDoc(doc(db, "tweets", tweet.value.id, "retweets", user.value.uid), {
+        id: tweet.value.user.uid,
+        name: tweet.value.user.name,
+      });
+    }
+  };
+
 </script>
 
 <template>
@@ -136,7 +147,7 @@ const likePost = async () => {
                 <p v-if="likes.length > 0">{{ likes.length }}</p>
             </div>
             <TrashIcon v-if="tweet?.user?.uid === user?.uid" class="text-[#f60100] w-6 cursor-pointer" />
-            <div class="flex items-center space-x-1 cursor-pointer">
+            <div class="flex items-center space-x-1 cursor-pointer" @click="retweetPost">
                 <ArrowsUpDownIconFilled v-if="isRetweeted" class="w-6 h-6 text-green-700" />
                 <ArrowsUpDownIcon v-else class="w-6 h-6 text-[#1ca0f2]" />
                 <p v-if="retweets.length > 0">{{ retweets?.length }}</p>
