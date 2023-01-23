@@ -1,7 +1,7 @@
 <script setup>
-import SideBar from '../components/TwitterSidebar.vue'
 import HomeTweets from '../components/HomeTweets.vue'
 import FeedsTweets from '../components/FeedsTweets.vue';
+import SideBar from '../components/SideBar.vue';
 </script>
 
 <template>

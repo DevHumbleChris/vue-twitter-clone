@@ -26,7 +26,6 @@ const appSignOut = () => {
 
 <template>
   <aside class="sticky top-0 h-screen w-18 sm:w-[21rem] border border-gray-200">
-    {/* col-span-1 sm:col-span-2 */}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
@@ -37,42 +36,42 @@ const appSignOut = () => {
     </svg>
     <nav class="space-y-4 text-lg">
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <HomeIcon class="w-12 h-12 text-[#1ca0f2]" />
-        <h1 class="hidden sm:block hover:text-[#1ca0f2]">Home</h1>
+        <HomeIcon class="w-10 h-10 text-[#1ca0f2]" />
+        <h1 class="hidden sm:block hover:text-[#1ca0f2]">Homed</h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <HashtagIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <HashtagIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">Explore</h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <BellIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <BellIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">
           Notifications
         </h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <EnvelopeIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <EnvelopeIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">Messages</h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <BookmarkIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <BookmarkIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">
           Bookmarks
         </h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <UserIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <UserIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">Profile</h1>
       </div>
       <div class="flex items-center px-4 space-x-2 cursor-pointer">
-        <EllipsisHorizontalCircleIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <EllipsisHorizontalCircleIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">More</h1>
       </div>
       <div
-        @click={appSignOut}
+        @click="appSignOut"
         class="flex px-4 items-center space-x-2 cursor-pointer"
       >
-        <ArrowRightOnRectangleIcon class="w-12 h-12 text-[#1ca0f2]" />
+        <ArrowRightOnRectangleIcon class="w-10 h-10 text-[#1ca0f2]" />
         <h1 class="hidden sm:block hover:text-[#1ca0f2]">Logout</h1>
       </div>
     </nav>
