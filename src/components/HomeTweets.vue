@@ -5,7 +5,7 @@ import TweetBox from './TweetBox.vue'
 
 <template>
   <section class="w-full scrollbar-hide overflow-scroll col-span-5 sm:col-span-4">
-    <header class="text-xl my-3">Home</header>
+    <header class="text-xl my-3 p-2">Home</header>
     <TweetBox />
     <TweetsUser />
   </section>

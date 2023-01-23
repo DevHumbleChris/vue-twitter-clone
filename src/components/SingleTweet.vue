@@ -125,7 +125,7 @@ const retweetPost = async () => {
                                 {{ tweet?.user.name }}
                             </h4>
                             <div class="w-2 h-2 rounded-full bg-gray-400"></div>
-                            <div>3 mins ago</div>
+                            <timeago :datetime="tweet?.timestamp?.toDate()" />
                         </div>
                         <h5 class="text-[15px] sm:text-base">
                             @<span class="text-[#1ca0f2]">{{tagName}}</span>
