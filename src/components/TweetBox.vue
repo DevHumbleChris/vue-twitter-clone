@@ -52,7 +52,7 @@ const addImageToPost = (e) => {
 </script>
 
 <template>
-  <div class="flex mt-4 space-x-3 w-full">
+  <div class="flex mt-4 space-x-3 w-full p-2">
     <img :src="user.photoURL" alt="" class="h-11 w-11 rounded-full" />
     <form @submit.prevent="handleSubmit" class="flex-grow">
       <textarea rows="2" v-model="tweet" placeholder="What's Happening?"
