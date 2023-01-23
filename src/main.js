@@ -12,12 +12,18 @@ import "./style.css";
 
 let app;
 
+const timeagoOptions = {
+  converterOptions: {
+      includeSeconds: true,
+  }
+}
+
 auth.onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App);
     app.use(createPinia());
     app.use(router);
-    app.use(timeago)
+    app.use(timeago, timeagoOptions)
     app.use(VueFire, {
       // imported above but could also just be created here
       firebaseApp,

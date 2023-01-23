@@ -12,6 +12,7 @@ import {
 } from "@heroicons/vue/20/solid";
 import { collection, deleteDoc, doc, onSnapshot, setDoc } from '@firebase/firestore';
 import { db, auth } from '../firebaseConfig';
+import { format } from 'timeago.js'
 
 const props = defineProps({
     tweet: Object
@@ -109,6 +110,12 @@ const retweetPost = async () => {
     }
   };
 
+const timeAgo = ref('')
+watchEffect(() => {
+    const tweetTime = format(tweet?.value.timestamp?.toDate())
+    timeAgo.value = tweetTime
+})
+
 </script>
 
 <template>
@@ -125,7 +132,7 @@ const retweetPost = async () => {
                                 {{ tweet?.user.name }}
                             </h4>
                             <div class="w-2 h-2 rounded-full bg-gray-400"></div>
-                            <timeago :datetime="tweet?.timestamp?.toDate()" />
+                            <p>{{ timeAgo }}</p>
                         </div>
                         <h5 class="text-[15px] sm:text-base">
                             @<span class="text-[#1ca0f2]">{{tagName}}</span>
