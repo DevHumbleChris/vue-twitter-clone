@@ -1,14 +1,15 @@
 <script setup>
-import { collection, onSnapshot, orderBy } from "@firebase/firestore"
-import { onMounted, ref } from 'vue'
+import { collection, onSnapshot, orderBy, query } from "@firebase/firestore"
+import { watchEffect, ref } from 'vue'
 import { db } from "../firebaseConfig";
 import SingleTweet from './SingleTweet.vue'
 
 const tweets = ref([])
 const loadingTweets = ref(true)
 
-onMounted(async () => {
-  onSnapshot(collection(db, 'tweets'), orderBy('timestamp', 'desc'), (querySnapshot) => {
+watchEffect(() => {
+  const q = query(collection(db, "tweets"), orderBy("timestamp", "desc"));
+  const unsub = onSnapshot(q, (querySnapshot) => {
     const myTweets = []
     querySnapshot.forEach(doc => {
       myTweets.push({ ...doc.data(), id: doc.id })
@@ -16,6 +17,7 @@ onMounted(async () => {
     tweets.value = myTweets
     loadingTweets.value = false
   })
+  return () => unsub()
 })
 </script>
 
