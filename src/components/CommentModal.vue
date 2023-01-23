@@ -63,7 +63,7 @@ const commentOnPost = async () => {
 }
 
 
-const addImageToPost = (e) => {
+const commentAddImageToPost = (e) => {
     const reader = new FileReader();
     if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]);
@@ -128,16 +128,16 @@ const addImageToPost = (e) => {
                                         <div class="w-8 h-8 left-1 cursor-pointer" @click="selectedFile = null">
                                             <XMarkIcon class="text-black h-5" />
                                         </div>
-                                        <img :src="selectedFile" :alt="user.displayName"
+                                        <img v-if="selectedFile" :src="selectedFile" :alt="user.displayName"
                                             class="rounded-2xl max-h-80 object-contain mb-2" />
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
                                             <div class="flex items-center" @click="pickFile">
-                                              <label for="imageFile" class="cursor-pointer">
+                                              <label for="commentImageFile" class="cursor-pointer">
                                                 <PhotoIcon class="w-8 text-[#1ca0f2]" />
                                               </label>
-                                              <input type="file" id="imageFile" hidden @change="addImageToPost" />
+                                              <input type="file" id="commentImageFile" hidden @change="commentAddImageToPost" />
                                             </div>
                                         </div>
                                         <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">

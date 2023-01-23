@@ -58,7 +58,7 @@ const addImageToPost = (e) => {
         <div class="w-8 h-8 left-1 cursor-pointer" @click="selectedFile = null">
           <XMarkIcon class="text-black h-5" />
         </div>
-        <img :src="selectedFile" alt="" class="rounded-2xl max-h-80 object-contain mb-2" />
+        <img v-if="selectedFile" :src="selectedFile" alt="" class="rounded-2xl max-h-80 object-contain mb-2" />
       </div>
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
