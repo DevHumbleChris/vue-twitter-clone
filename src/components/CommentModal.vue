@@ -37,9 +37,9 @@ function closeModal() {
 
 const commentOnPost = async () => {
     const docRef = await addDoc(
-        collection(db, "tweets", tweet.value.id, "comments"),
+        collection(db, "tweets", tweet?.value.id, "comments"),
         {
-            comment: tweetReply,
+            comment: tweetReply.value,
             user: {
                 uid: user.value.uid,
                 name: user.value.displayName,
@@ -48,7 +48,7 @@ const commentOnPost = async () => {
             timestamp: serverTimestamp(),
         }
     );
-    const imageRef = ref(storage, `tweets/${tweet.value.id}/comments/${docRef.id}/images`);
+    const imageRef = ref(storage, `tweets/${tweet?.value.id}/comments/${docRef.id}/images`);
     if (selectedFile.value) {
         await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
             const downloadURL = await getDownloadURL(imageRef);
@@ -57,8 +57,9 @@ const commentOnPost = async () => {
             });
         });
     }
-    tweet.value = ''
-    selectedFile.value = ''
+    tweetReply.value = ''
+    selectedFile.value = null
+    store.openCommentModal()
 }
 
 
