@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, watchEffect, ref } from 'vue'
 import {
   ChatBubbleOvalLeftIcon,
   HeartIcon,
@@ -25,44 +25,60 @@ const tweet = computed(() => {
     return props.tweet
 })
 
-const comments = computed(() => {
-    const comments = []
-    onSnapshot(collection(db, "tweets", tweet?.value.id, "comments"), (querySnapshot) => {
+const comments = ref([])
+watchEffect(() => {
+    const unsub = onSnapshot(collection(db, "tweets", tweet?.value.id, "comments"), (querySnapshot) => {
+        const myComments = []
         querySnapshot.forEach(doc => {
-            comments?.push({ ...doc.data(), id: doc.id })
+            myComments?.push({ ...doc.data(), id: doc.id })
         })
+        comments.value = myComments
     })
-    return comments
+    return () => unsub()
 })
 
-const likes = computed(() => {
-    const likes = []
-    onSnapshot(collection(db, "tweets", tweet?.value.id, "likes"), (querySnapshot) => {
+const likes = ref([])
+watchEffect(() => {
+    const unsub = onSnapshot(collection(db, "tweets", tweet?.value.id, "likes"), (querySnapshot) => {
+        const userLikes = []
         querySnapshot.forEach(doc => {
-            likes?.push({ ...doc.data(), id: doc.id })
+            userLikes?.push({ ...doc.data(), id: doc.id })
         })
+        likes.value = userLikes
     })
-    return likes
+    return () => unsub()
 })
 
-const retweets = computed(() => {
-    const retweets = []
-    onSnapshot(collection(db, "tweets", tweet?.value.id, "retweets"), (querySnapshot) => {
+const retweets = ref([])
+watchEffect(() => {
+    const unsub = onSnapshot(collection(db, "tweets", tweet?.value.id, "retweets"), (querySnapshot) => {
+        let userRetweets = []
         querySnapshot.forEach(doc => {
-            retweets?.push({ ...doc.data(), id: doc.id })
+            userRetweets?.push({ ...doc.data(), id: doc.id })
         })
+        retweets.value = userRetweets
     })
-    return retweets
+    return () => unsub()
 })
 
-const liked = computed(() => {
+const liked = ref(null)
+watchEffect(() => {
     const isLiked = likes?.value.filter((like) => like?.id === user?.value.uid);
-    return isLiked?.length > 0 ? true : false
+    if (isLiked?.length > 0) {
+        liked.value = true
+    } else {
+        liked.value = false
+    }
 })
 
-const isRetweeted = computed(() => {
+const isRetweeted = ref(null)
+watchEffect(() => {
     const isRetweet = retweets?.value.filter((retweet) => retweet?.id === user?.value.uid);
-    return isRetweet?.length > 0 ? true : false
+    if (isRetweet?.length > 0) {
+        isRetweeted.value = true
+    } else {
+        isRetweeted.value = false
+    }
 })
 
 </script>
