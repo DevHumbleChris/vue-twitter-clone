@@ -127,8 +127,7 @@ watchEffect(() => {
 
 <template>
     <div class="border border-gray-300 p-2">
-        <!-- {`/tweet/@${tagName}/${tweet.id}`} -->
-        <router-link to="#">
+        <router-link :to="`/tweet/@${tagName}/${tweet.id}`">
             <div class="flex space-x-2">
                 <img :src="tweet?.user?.photoURL" :lt="tweet?.user?.name"
                     class="w-16 h-16 border border-gray-200 rounded-full" />

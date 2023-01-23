@@ -12,7 +12,7 @@ const googleSignin = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       autheticated.setAuthentication()
-      router.push({ path: '/' })
+      router.push({ path: '/home' })
       console.log(result);
     })
     .catch((err) => {
