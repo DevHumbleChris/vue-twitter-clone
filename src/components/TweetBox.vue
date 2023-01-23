@@ -63,13 +63,10 @@ const addImageToPost = (e) => {
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-2">
           <div class="flex items-center" @click="pickFile">
-            <!-- onClick={() => filePickerRef.current.click()} -->
             <label for="imageFile" class="cursor-pointer">
               <PhotoIcon class="w-8 text-[#1ca0f2]" />
             </label>
             <input type="file" id="imageFile" hidden @change="addImageToPost" />
-            <!-- onChange={addImageToPost}
-                  ref={filePickerRef} -->
           </div>
         </div>
         <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">

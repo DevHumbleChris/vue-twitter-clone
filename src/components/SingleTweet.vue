@@ -13,10 +13,13 @@ import {
 import { collection, deleteDoc, doc, onSnapshot, setDoc } from '@firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import { format } from 'timeago.js'
+import { useTweetStore } from '@/stores/tweets'
 
 const props = defineProps({
     tweet: Object
 })
+
+const store = useTweetStore()
 
 const user = computed(() => {
     return auth.currentUser
@@ -110,6 +113,10 @@ const retweetPost = async () => {
     }
   };
 
+const commentPost = () => {
+    store.openCommentModal(tweet.value)
+}
+
 const timeAgo = ref('')
 watchEffect(() => {
     const tweetTime = format(tweet?.value.timestamp?.toDate())
@@ -148,7 +155,7 @@ watchEffect(() => {
             </div>
         </router-link>
         <div class="flex justify-evenly m-2">
-            <div class="flex items-center space-x-1 cursor-pointer">
+            <div class="flex items-center space-x-1 cursor-pointer" @click="commentPost">
                 <ChatBubbleOvalLeftIcon class="w-6 h-6 text-[#1ca0f2]" />
                 <p v-if="comments.length > 0">
                     {{ comments?.length }}

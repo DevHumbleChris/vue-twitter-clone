@@ -1,12 +1,18 @@
 <script setup>
 import { collection, onSnapshot, orderBy, query } from "@firebase/firestore"
-import { watchEffect, ref } from 'vue'
+import { watchEffect, ref, computed } from 'vue'
 import { db } from "../firebaseConfig";
 import SingleTweet from './SingleTweet.vue'
 import CommentModal from "./CommentModal.vue";
+import { useTweetStore } from '@/stores/tweets'
 
 const tweets = ref([])
 const loadingTweets = ref(true)
+const store = useTweetStore()
+
+const isModal = computed(() => {
+  return store.isCommentModalOpen
+})
 
 watchEffect(() => {
   const q = query(collection(db, "tweets"), orderBy("timestamp", "desc"));
@@ -24,7 +30,6 @@ watchEffect(() => {
 
 <template>
   <div>
-    <CommentModal />
     <div v-if="loadingTweets" className="mx-auto my-12 animate-bounce">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="#1ca0f2" class="w-12 h-12 mx-auto">
         <path
@@ -35,11 +40,11 @@ watchEffect(() => {
     <div v-else>
       <SingleTweet v-for="tweet in tweets" :key="tweet.id" :tweet="tweet" />
     </div>
+    <CommentModal v-if="isModal" />
     <!-- {!loadingTweets &&
           tweets.map((tweet) => {
             return <Tweet key={tweet.id} tweet={tweet} />;
           })}
-
         {isModalOpen && <Modal />}
         {deleteModal && <DeleteTweet/>} -->
   </div>
