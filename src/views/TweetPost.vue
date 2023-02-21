@@ -21,18 +21,13 @@ const tagName = computed(() => {
     return route?.params?.tagName
 })
 const tweet = ref(null)
-onBeforeMount(() => {
+
+watchEffect(() => {
     const unsub = onSnapshot(doc(db, "tweets", tweetID.value), (doc) => {
         tweet.value = { ...doc.data(), id: doc.id }
     });
   return () => unsub()
 })
-// watchEffect(() => {
-//     const unsub = onSnapshot(doc(db, "tweets", tweetID.value), (doc) => {
-//         tweet.value = { ...doc.data(), id: doc.id }
-//     });
-//   return () => unsub()
-// })
 
 const comments = ref([])
 watchEffect(() => {
@@ -90,10 +85,12 @@ watchEffect(() => {
     }
 })
 
-const timeAgo = ref('')
-watchEffect(() => {
-    const tweetTime = format(tweet?.value.timestamp?.toDate())
-    timeAgo.value = tweetTime
+const timeAgo = computed(() => {
+  let tweetTime = '1 min'
+  if (tweet.value) {
+    tweetTime = format(tweet?.value.timestamp?.toDate())
+  }
+  return tweetTime
 })
 </script>
 
