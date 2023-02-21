@@ -13,6 +13,7 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/f
 import { getDownloadURL, uploadString, ref as storageRef } from '@firebase/storage'
 import { PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { format } from 'timeago.js'
+import { toast } from 'vue3-toastify';
 
 const tweetReply = ref('')
 const selectedFile = ref(null)
@@ -37,30 +38,41 @@ function closeModal() {
 }
 
 const commentOnPost = async () => {
-    const docRef = await addDoc(
-        collection(db, "tweets", tweet?.value.id, "comments"),
-        {
-            comment: tweetReply.value,
-            user: {
-                uid: user.value.uid,
-                name: user.value.displayName,
-                photoURL: user.value.photoURL,
-            },
-            timestamp: serverTimestamp(),
-        }
-    );
-    const imageRef = storageRef(storage, `tweets/${tweet?.value.id}/comments/${docRef.id}/images`);
-    if (selectedFile.value) {
-        await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
-            const downloadURL = await getDownloadURL(imageRef);
-            await updateDoc(doc(db, "tweets", docRef.id), {
-                image: downloadURL,
+    try {
+        const docRef = await addDoc(
+            collection(db, "tweets", tweet?.value.id, "comments"),
+            {
+                comment: tweetReply.value,
+                user: {
+                    uid: user.value.uid,
+                    name: user.value.displayName,
+                    photoURL: user.value.photoURL,
+                },
+                timestamp: serverTimestamp(),
+            }
+        );
+        const imageRef = storageRef(storage, `tweets/${tweet?.value.id}/comments/${docRef.id}/images`);
+        if (selectedFile.value) {
+            await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
+                const downloadURL = await getDownloadURL(imageRef);
+                await updateDoc(doc(db, "tweets", docRef.id), {
+                    image: downloadURL,
+                });
             });
-        });
+        }
+        tweetReply.value = ''
+        selectedFile.value = null
+        store.openCommentModal()
+        toast('Comment Uploaded!', {
+            type: 'info',
+            theme: 'colored'
+        })
+    } catch (error) {
+        toast(error.message, {
+            type: 'error',
+            theme: 'colored'
+        })
     }
-    tweetReply.value = ''
-    selectedFile.value = null
-    store.openCommentModal()
 }
 
 
@@ -97,14 +109,13 @@ watchEffect(() => {
                         <DialogPanel
                             class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                             <DialogTitle as="h3"
-                                class="text-lg font-medium leading-6 text-gray-900 absolute bg-[#1ca0f2] rounded-full top-3 right-3 cursor-pointer" @click="store.openCommentModal"
-                                >
+                                class="text-lg font-medium leading-6 text-gray-900 absolute bg-[#1ca0f2] rounded-full top-3 right-3 cursor-pointer"
+                                @click="store.openCommentModal">
                                 <XMarkIcon class="w-6 text-white" />
                             </DialogTitle>
                             <div class="flex gap-x-3 relative my-2">
                                 <span class="w-0.5 h-full z-[-1] absolute left-5 top-11 bg-gray-600"></span>
-                                <img :src="tweet?.user?.photoURL" :alt="tweet?.user?.name"
-                                    class="h-11 w-11 rounded-full" />
+                                <img :src="tweet?.user?.photoURL" :alt="tweet?.user?.name" class="h-11 w-11 rounded-full" />
                                 <div>
                                     <div class="inline-block group">
                                         <div class="flex items-center space-x-2 justify-between">
@@ -130,7 +141,8 @@ watchEffect(() => {
                                 <img :src="user?.photoURL" :alt="user?.displayName" class="h-11 w-11 rounded-full" />
                                 <form @submit.prevent="commentOnPost" class="flex-grow">
                                     <textarea placeholder="Reply tweet..." rows="2" v-model="tweetReply"
-                                        class="outline-none tracking-wide min-h-[80px] bg-transparent w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required></textarea>
+                                        class="outline-none tracking-wide min-h-[80px] bg-transparent w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                        required></textarea>
                                     <div v-if="selectedFile" class="relative my-2">
                                         <div class="w-8 h-8 left-1 cursor-pointer" @click="selectedFile = null">
                                             <XMarkIcon class="text-black h-5" />
@@ -141,10 +153,11 @@ watchEffect(() => {
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
                                             <div class="flex items-center" @click="pickFile">
-                                              <label for="commentImageFile" class="cursor-pointer">
-                                                <PhotoIcon class="w-8 text-[#1ca0f2]" />
-                                              </label>
-                                              <input type="file" id="commentImageFile" hidden @change="commentAddImageToPost" />
+                                                <label for="commentImageFile" class="cursor-pointer">
+                                                    <PhotoIcon class="w-8 text-[#1ca0f2]" />
+                                                </label>
+                                                <input type="file" id="commentImageFile" hidden
+                                                    @change="commentAddImageToPost" />
                                             </div>
                                         </div>
                                         <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">
@@ -159,5 +172,4 @@ watchEffect(() => {
             </div>
         </Dialog>
     </TransitionRoot>
-
 </template>

@@ -10,6 +10,9 @@ import timeago from 'vue-timeago3'
 
 import "./style.css";
 
+import Vue3Toasity from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 let app;
 
 const timeagoOptions = {
@@ -24,6 +27,9 @@ auth.onAuthStateChanged(() => {
     app.use(createPinia());
     app.use(router);
     app.use(timeago, timeagoOptions)
+    app.use(Vue3Toasity, {
+      autoClose: 3000,
+    });
     app.use(VueFire, {
       // imported above but could also just be created here
       firebaseApp,

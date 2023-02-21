@@ -5,6 +5,7 @@ import { db } from "../firebaseConfig";
 import SingleTweet from './SingleTweet.vue'
 import CommentModal from "./CommentModal.vue";
 import { useTweetStore } from '@/stores/tweets'
+import DeleteTweet from "./DeleteTweet.vue";
 
 const tweets = ref([])
 const loadingTweets = ref(true)
@@ -41,11 +42,6 @@ watchEffect(() => {
       <SingleTweet v-for="tweet in tweets" :key="tweet.id" :tweet="tweet" />
     </div>
     <CommentModal v-if="isModal" />
-    <!-- {!loadingTweets &&
-          tweets.map((tweet) => {
-            return <Tweet key={tweet.id} tweet={tweet} />;
-          })}
-        {isModalOpen && <Modal />}
-        {deleteModal && <DeleteTweet/>} -->
+    <DeleteTweet />
   </div>
 </template>

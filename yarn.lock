@@ -2145,6 +2145,11 @@ vue-timeago3@^2.3.0:
   dependencies:
     date-fns "^2.28.0"
 
+vue3-toastify@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/vue3-toastify/-/vue3-toastify-0.1.0.tgz#983151b20632b04cebfd4273399699c2077c1cae"
+  integrity sha512-Vm1tDkn+iu24E/2yhq5EYrY97gDkl7t/vNWaI4HRKJRCyFP6glR6RYEKye93fFtS6cxIrO7XPx5upr9waNyMmg==
+
 vue@^3.2.45:
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.45.tgz#94a116784447eb7dbd892167784619fef379b3c8"

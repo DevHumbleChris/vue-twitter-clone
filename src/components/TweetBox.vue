@@ -5,6 +5,7 @@ import { addDoc, collection, doc, serverTimestamp, updateDoc } from "@firebase/f
 import { db, storage } from "../firebaseConfig";
 import { getDownloadURL, uploadString, ref as storageRef } from "@firebase/storage";
 import { XMarkIcon, PhotoIcon } from "@heroicons/vue/24/outline";
+import { toast } from 'vue3-toastify';
 
 const tweet = ref('')
 const selectedFile = ref(null)
@@ -14,26 +15,37 @@ const user = computed(() => {
 });
 
 const handleSubmit = async () => {
-  const docRef = await addDoc(collection(db, "tweets"), {
-    tweet: tweet.value,
-    user: {
-      uid: user.value.uid,
-      name: user.value.displayName,
-      photoURL: user.value.photoURL
-    },
-    timestamp: serverTimestamp()
-  })
-  const imageRef = storageRef(storage, `tweets/${docRef.id}/images`);
-  if (selectedFile.value) {
-    await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
-      const downloadURL = await getDownloadURL(imageRef);
-      await updateDoc(doc(db, "tweets", docRef.id), {
-        image: downloadURL,
+  try {
+    const docRef = await addDoc(collection(db, "tweets"), {
+      tweet: tweet.value,
+      user: {
+        uid: user.value.uid,
+        name: user.value.displayName,
+        photoURL: user.value.photoURL
+      },
+      timestamp: serverTimestamp()
+    })
+    const imageRef = storageRef(storage, `tweets/${docRef.id}/images`);
+    if (selectedFile.value) {
+      await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "tweets", docRef.id), {
+          image: downloadURL,
+        });
       });
-    });
+    }
+    tweet.value = ''
+    selectedFile.value = ''
+    toast('Tweet Uploaded!', {
+      type: 'info',
+      theme: 'colored'
+    })
+  } catch (error) {
+    toast(error.message, {
+      type: 'error',
+      theme: 'colored'
+    })
   }
-  tweet.value = ''
-  selectedFile.value = ''
 }
 
 

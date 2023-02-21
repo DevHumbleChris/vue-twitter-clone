@@ -123,6 +123,10 @@ watchEffect(() => {
     timeAgo.value = tweetTime
 })
 
+const deleteModal = () => {
+    store.openDeleteModal(tweet.value)
+}
+
 </script>
 
 <template>
@@ -165,7 +169,7 @@ watchEffect(() => {
                 <HeartIcon v-else class="w-6 h-6 text-[#1ca0f2]" />
                 <p v-if="likes.length > 0">{{ likes.length }}</p>
             </div>
-            <TrashIcon v-if="tweet?.user?.uid === user?.uid" class="text-[#f60100] w-6 cursor-pointer" />
+            <TrashIcon @click="deleteModal" v-if="tweet?.user?.uid === user?.uid" class="text-[#f60100] w-6 cursor-pointer" />
             <div class="flex items-center space-x-1 cursor-pointer" @click="retweetPost">
                 <ArrowsUpDownIconFilled v-if="isRetweeted" class="w-6 h-6 text-green-700" />
                 <ArrowsUpDownIcon v-else class="w-6 h-6 text-[#1ca0f2]" />
