@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { ChevronLeftIcon } from '@heroicons/vue/24/outline'
+</script>
 
 <template>
     <section className="w-full scrollbar-hide overflow-scroll col-span-5 sm:col-span-4">
