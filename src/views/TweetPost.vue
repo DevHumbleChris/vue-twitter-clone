@@ -1,12 +1,12 @@
 <script setup>
-import { ArrowsUpDownIcon, ChatBubbleOvalLeftIcon, ChevronLeftIcon, HeartIcon, PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { RouterLink } from 'vue-router'
+import { ArrowsUpDownIcon, ChatBubbleOvalLeftIcon, HeartIcon, PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { watchEffect, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { collection, doc, onSnapshot } from '@firebase/firestore';
-import { auth, db } from '../firebaseConfig';
+import { addDoc, collection, doc, onSnapshot, serverTimestamp, updateDoc } from '@firebase/firestore';
+import { auth, db, storage } from '../firebaseConfig';
 import { HeartIcon as HeartIconFilled, ArrowsUpDownIcon as ArrowsUpDownIconFilled } from '@heroicons/vue/20/solid';
 import { format } from 'timeago.js';
+import { getDownloadURL, uploadString, ref as storageRef } from '@firebase/storage';
 
 const user = computed(() => {
   return auth.currentUser
@@ -95,9 +95,42 @@ const timeAgo = computed(() => {
   return tweetTime
 })
 
-const commentOnPost = () => {
-
+const commentOnPost = async () => {
+    const docRef = await addDoc(
+        collection(db, "tweets", tweetID.value, "comments"),
+        {
+            comment: tweetReply.value,
+            user: {
+                uid: user.value.uid,
+                name: user.value.displayName,
+                photoURL: user.value.photoURL,
+            },
+            timestamp: serverTimestamp(),
+        }
+    );
+    const imageRef = storageRef(storage, `tweets/${tweetID.value}/comments/${docRef.id}/images`);
+    if (selectedFile.value) {
+      await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "tweets", tweetID.value, "comments", docRef.id), {
+          image: downloadURL,
+        });
+      });
+    }
+    tweetReply.value = ''
+    selectedFile.value = null
 }
+
+
+const commentAddImageToPost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (readerEvent) => {
+        selectedFile.value = readerEvent.target.result;
+    };
+};
 
 const timeOfUpdate = (time) => {
   let updateTime = ''
@@ -109,9 +142,6 @@ const timeOfUpdate = (time) => {
 <template>
   <section className="w-full scrollbar-hide overflow-scroll col-span-5 sm:col-span-4">
     <div className="sticky top-0 p-2 flex space-x-2 items-center text-lg">
-      <RouterLink to="/home">
-        <ChevronLeftIcon className="w-6" />
-      </RouterLink>
       <h1>Tweet</h1>
     </div>
     <div class="border-b border-gray-300">
@@ -174,18 +204,18 @@ const timeOfUpdate = (time) => {
             class="outline-none tracking-wide min-h-[80px] bg-transparent w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
           <div v-if="selectedFile" class="relative my-2">
             <div class="w-8 h-8 left-1 cursor-pointer">
-              <XMarkIcon class="text-black h-5" />
+              <XMarkIcon @click="selectedFile = null" class="text-black h-5" />
             </div>
             <img :src="selectedFile" :alt="user?.displayName" class="rounded-2xl max-h-80 object-contain mb-2" />
           </div>
           <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <div class="flex items-center cursor-pointer">
+            <div class="flex items-center" @click="pickFile">
+              <label for="commentImageFile" class="cursor-pointer">
                 <PhotoIcon class="w-8 text-[#1ca0f2]" />
-                <input type="file" hidden />
-              </div>
+              </label>
+              <input type="file" id="commentImageFile" hidden @change="commentAddImageToPost" />
             </div>
-            <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" disabled={!tweetReply} type="submit">
+            <button class="bg-[#1ca0f2] text-white p-2 my-2 rounded-2xl" type="submit">
               Tweet
             </button>
           </div>

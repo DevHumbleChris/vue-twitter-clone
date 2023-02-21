@@ -10,7 +10,7 @@ import {
 } from '@headlessui/vue'
 import { auth, db, storage } from '../firebaseConfig'
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/firestore'
-import { getDownloadURL, uploadString } from '@firebase/storage'
+import { getDownloadURL, uploadString, ref as storageRef } from '@firebase/storage'
 import { PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { format } from 'timeago.js'
 
@@ -49,7 +49,7 @@ const commentOnPost = async () => {
             timestamp: serverTimestamp(),
         }
     );
-    const imageRef = ref(storage, `tweets/${tweet?.value.id}/comments/${docRef.id}/images`);
+    const imageRef = storageRef(storage, `tweets/${tweet?.value.id}/comments/${docRef.id}/images`);
     if (selectedFile.value) {
         await uploadString(imageRef, selectedFile.value, "data_url").then(async () => {
             const downloadURL = await getDownloadURL(imageRef);
