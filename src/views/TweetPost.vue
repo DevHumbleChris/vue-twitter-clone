@@ -1,7 +1,7 @@
 <script setup>
 import { ArrowsUpDownIcon, ChatBubbleOvalLeftIcon, ChevronLeftIcon, HeartIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
-import { watchEffect, ref, computed, onBeforeMount } from 'vue'
+import { watchEffect, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { collection, doc, onSnapshot } from '@firebase/firestore';
 import { auth, db } from '../firebaseConfig';
