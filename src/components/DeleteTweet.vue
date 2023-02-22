@@ -9,6 +9,9 @@ import {
 } from '@headlessui/vue'
 import { useTweetStore } from '@/stores/tweets'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from '../firebaseConfig'
+import { toast } from 'vue3-toastify';
 
 const store = useTweetStore()
 
@@ -23,6 +26,22 @@ const tweet = computed(() => {
 function closeModal() {
     store.closeDeleteModal()
 }
+
+const deleteTweet = async () => {
+    try {
+        await deleteDoc(doc(db, "tweets", tweet.value.id));
+        store.closeDeleteModal()
+        toast('Tweet Deleted Successfully!', {
+            type: 'info',
+            theme: 'colored'
+        })
+    } catch (err) {
+        toast(err.message, {
+            type: 'error',
+            theme: 'colored'
+        })
+    }
+};
 </script>
 
 <template>
@@ -51,7 +70,7 @@ function closeModal() {
                             </div>
                             <div class="text-sm text-gray-500">
                                 <div>
-                                    <p v-if="tweet.tweet" class="my-2">{{tweet.tweet}}</p>
+                                    <p v-if="tweet.tweet" class="my-2">{{ tweet.tweet }}</p>
                                     <div v-if="tweet.image" class="my-2">
                                         <img :src="tweet.image" :alt="tweet.id" class="object-contain rounded-xl" />
                                     </div>
@@ -64,7 +83,7 @@ function closeModal() {
                                     @click="closeModal">
                                     No, Thanks!
                                 </button>
-                                <button type="button"
+                                <button @click="deleteTweet" type="button"
                                     class="inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:text-red-600 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">
                                     Yes, Delete!
                                 </button>
