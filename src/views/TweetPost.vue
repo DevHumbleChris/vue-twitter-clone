@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowsUpDownIcon, ChatBubbleOvalLeftIcon, HeartIcon, PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ArrowsUpDownIcon, ChatBubbleOvalLeftIcon, ChevronDoubleLeftIcon, HeartIcon, PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { watchEffect, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { addDoc, collection, doc, onSnapshot, serverTimestamp, updateDoc } from '@firebase/firestore';
@@ -142,6 +142,9 @@ const timeOfUpdate = (time) => {
 <template>
   <section className="w-full scrollbar-hide overflow-scroll col-span-5 sm:col-span-4">
     <div className="sticky top-0 p-2 flex space-x-2 items-center text-lg">
+      <router-link to='/home'>
+        <ChevronDoubleLeftIcon class="w-6" />
+      </router-link>
       <h1>Tweet</h1>
     </div>
     <div class="border-b border-gray-300">
