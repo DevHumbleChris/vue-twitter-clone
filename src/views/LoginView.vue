@@ -21,7 +21,7 @@ const googleSignin = () => {
     })
     .catch((err) => {
       toast(err.message, {
-        type: 'info',
+        type: 'error',
         theme: 'colored'
       })
     });
